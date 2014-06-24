@@ -1,0 +1,42 @@
+//////////////////////////////////////////////////////
+// Max Slice Sum with Single Swap in java language. //
+//////////////////////////////////////////////////////
+
+import java.math.*;
+
+class Solution {
+    public int solution(int[] A) {
+        int i=0,l=0,k=0;
+        int max_slice_sum = A[0], max_sum_part = 0, curr_max = 0;
+        
+        // Base case
+        if(A.length == 1) 
+            return A[0];
+            
+        //General case
+        else{
+
+            //Swap and calculate slice max sum
+            for (l=0 ; l < A.length ; l++){
+                for (k = l+1 ; k < A.length ; k++){
+
+                    int [] A_aux = A.clone();
+                    int num_aux = A_aux[l];
+                    A_aux [l] = A_aux[k];
+                    A_aux[k]=num_aux;
+
+                    max_sum_part = A_aux[0];
+                    curr_max = A_aux[0];
+                    for(i = 1; i < A_aux.length; i++){
+                        curr_max = Math.max(A_aux[i], curr_max + A_aux[i]); 
+                        max_sum_part = Math.max(max_sum_part, curr_max);
+                    }
+
+                    max_slice_sum = Math.max(max_slice_sum , max_sum_part);
+
+                }
+            }
+            return max_slice_sum;
+        }
+    }
+}
